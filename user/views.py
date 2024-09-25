@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.views.decorators.csrf import csrf_exempt, csrf_protect
-from django.contrib.auth import login
+from django.contrib.auth import login, logout
 from django.contrib import messages
 from .forms import UserRegisterForm
 # Create your views here.
@@ -41,3 +41,8 @@ def register_view(request):
         form = UserRegisterForm()
     context = {'form': form}
     return render(request, "UserRegister.html", context)
+
+
+def logout_custom(request):
+    logout(request)
+    return redirect('home_page')
