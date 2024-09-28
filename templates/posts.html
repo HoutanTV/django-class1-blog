@@ -1,0 +1,14 @@
+{%extends "base.html"%}
+
+{%block title%}
+posts
+{%endblock%}
+
+
+{% block content %}
+<ul>
+    {% for post in objects_list %}
+    <li><p>{{post.author.username}}</p></li>
+    {%endfor%}
+</ul>
+{% endblock %}
