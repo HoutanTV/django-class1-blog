@@ -1,0 +1,30 @@
+{%extends "base.html"%}
+
+{%block title%}
+create post
+{%endblock%}
+
+
+{% block content %}
+    <form method="POST">
+        {% csrf_token %}
+
+        {% for field in form %}
+        <div class="form-group">
+            <label for="{{field.id_for_label}}"> {{field.label}}</label>
+            {{field}}
+            {% if field.errors %}
+            <div class="text-danger">
+                {% for error in field.errors %}
+                    <p>{{ error }}</p>  <!-- Display each error -->
+                {% endfor %}
+            </div>
+        {% endif %}
+        </div>
+
+        {%endfor%}
+
+        <button type="submit" class="btn btn-primary">Create</button>
+
+    </form>
+{% endblock %}
