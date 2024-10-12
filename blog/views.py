@@ -39,3 +39,25 @@ class PostCreateView(CreateView):
         obj.author = self.request.user
         obj.save()
         return super().form_valid(form)
+
+
+def post_view(request, id):
+    post = Post.objects.get(id=id)
+    return render(request, 'Post.html', {'post': post})
+
+
+def post_search_view(request):
+    title = request.GET.get('title')
+    description = request.GET.get('desc')
+    category = request.GET.get('category')
+    fields = {}
+
+    if title:
+        fields['title__icontains'] = title
+    if description:
+        fields['description__icontains'] = description
+    if category:
+        fields['category__title'] = category
+
+    queryset = Post.objects.filter(**fields)
+    return render(request, 'postsearch.html', {"posts": queryset})

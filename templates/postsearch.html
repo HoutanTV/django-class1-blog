@@ -1,0 +1,59 @@
+{%extends "base.html"%}
+
+{%block title%}
+Post search
+{%endblock%}
+
+{%block content%}
+ <!-- Search Form -->
+        <form method="get" action="/blog/post/search" class="row g-3" style="margin-bottom: 20px">
+            <!-- Field for Description -->
+            <div class="col-md-4">
+                <label for="desc" class="form-label">Description</label>
+                <input type="text" class="form-control" id="desc" name="desc" placeholder="Enter description" value="{{ request.GET.desc|default:'' }}">
+
+                <button type="submit" class="btn btn-primary mt-3">Search</button>
+            </div>
+            <!-- Submit Button -->
+
+        </form>
+
+
+<div class="container">
+    <div class="row">
+        {%for post in posts%}
+
+        <div class="col-sm-4">
+            <div class="card" style="width: 18rem;">
+                <div class="card-body">
+                    <h5 class="card-title">{{post.title}}</h5>
+                    <p class="card-text" id="text">{{post.description}}</p>
+                    <a href="/blog/post/{{post.id}}/" class="btn btn-primary">Go To Post</a>
+                </div>
+            </div>
+        </div>
+
+        {%endfor%}
+    </div>
+</div>
+
+<script>
+    // Select the paragraph element
+    const textElement = document.getElementById('text');
+
+    // Get the full text
+    const fullText = textElement.innerText;
+
+    // Split the text by spaces to get the words
+    const words = fullText.split(' ');
+
+    // Check if the text has more than 15 words
+    if (words.length > 15) {
+        // Keep only the first 15 words and add '...'
+        const truncatedText = words.slice(0, 15).join(' ') + '...';
+
+        // Set the truncated text back to the paragraph element
+        textElement.innerText = truncatedText;
+    }
+</script>
+{%endblock%}
